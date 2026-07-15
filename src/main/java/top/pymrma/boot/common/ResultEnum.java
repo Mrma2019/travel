@@ -1,7 +1,8 @@
 package top.pymrma.boot.common;
 
 public enum ResultEnum {
-    SUCCESS(200, "处理成功");
+    SUCCESS(200, "处理成功"),
+    SYSTEM_ERROR(-1, "系统错误...");
 
     private int code;
     private String msg;

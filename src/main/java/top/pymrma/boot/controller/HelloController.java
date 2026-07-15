@@ -13,6 +13,6 @@ import top.pymrma.boot.common.ResultMap;
 public class HelloController {
     @GetMapping
     public ResultMap<String> index() {
-        return new ResultMap<>(ResultEnum.SUCCESS, "测试");
+        return new ResultMap<>(ResultEnum.SUCCESS, "HelloWorld");
     }
 }
