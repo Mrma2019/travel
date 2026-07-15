@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.RestController;
 import top.pymrma.boot.common.ResultEnum;
 import top.pymrma.boot.common.ResultMap;
 
+@Slf4j
 @RestController
 @RequestMapping("index")
-@Slf4j
 public class HelloController {
     @GetMapping
-    public ResultMap<Void> index() {
-        return new ResultMap<>(ResultEnum.SUCCESS);
+    public ResultMap<String> index() {
+        return new ResultMap<>(ResultEnum.SUCCESS, "测试");
     }
 }
