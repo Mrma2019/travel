@@ -19,14 +19,14 @@ public class ResultMap<T> extends HashMap {
         this.putAll(map);
     }
 
-    public ResultMap(int code, String msg) {
-        this.code = code;
-        this.msg = msg;
+    public ResultMap(ResultEnum resultEnum) {
+        this.code = resultEnum.getCode();
+        this.msg = resultEnum.getMsg();
     }
 
-    public ResultMap(int code, String msg, T data) {
-        this.code = code;
-        this.msg = msg;
+    public ResultMap(ResultEnum resultEnum, T data) {
+        this.code = resultEnum.getCode();
+        this.msg = resultEnum.getMsg();
         this.data = data;
     }
 }
