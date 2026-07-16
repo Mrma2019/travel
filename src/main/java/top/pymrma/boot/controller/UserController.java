@@ -8,21 +8,18 @@ import org.springframework.web.bind.annotation.RestController;
 import top.pymrma.boot.common.ResultEnum;
 import top.pymrma.boot.common.ResultMap;
 import top.pymrma.boot.entity.User;
-import top.pymrma.boot.services.EmailService;
 import top.pymrma.boot.services.UserService;
 
 @RestController
-@RequestMapping("register")
+@RequestMapping("user")
 @RequiredArgsConstructor
-public class RegisterController {
+public class UserController {
     private final UserService userService;
-    private final EmailService emailService;
 
-    //用户注册
-    @PostMapping
-    public ResultMap<String> register(@RequestBody User user) {
-        emailService.sendSimpleEamil(user.getEmail(), "欢迎注册travel-memory", "您好");
+    //添加用户
+    @PostMapping("add")
+    public ResultMap addUser(@RequestBody User user) {
         userService.addUser(user);
-        return new ResultMap<>(ResultEnum.SUCCESS, "注册成功啦！");
+        return new ResultMap<>(ResultEnum.SUCCESS);
     }
 }
