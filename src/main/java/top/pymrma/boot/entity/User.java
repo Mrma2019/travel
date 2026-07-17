@@ -20,6 +20,7 @@ public class User {
     private String avatarUrl;
     @Column(nullable = false, unique = true)
     private String email;
+    private String password;
     private String bio;
     private String hobbies;
     private String preferences;
