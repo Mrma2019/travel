@@ -1,25 +1,30 @@
 package top.pymrma.boot.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import top.pymrma.boot.common.ResultEnum;
 import top.pymrma.boot.common.ResultMap;
 import top.pymrma.boot.entity.User;
-import top.pymrma.boot.services.UserService;
+import top.pymrma.boot.services.impl.UserServiceImpl;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("user")
 @RequiredArgsConstructor
 public class UserController {
-    private final UserService userService;
+    private final UserServiceImpl userService;
 
     //添加用户
     @PostMapping("add")
-    public ResultMap addUser(@RequestBody User user) {
-        userService.addUser(user);
+    public ResultMap createUser(@RequestBody User user) {
+        userService.createUser(user);
         return new ResultMap<>(ResultEnum.SUCCESS);
+    }
+
+    //全部用户
+    @GetMapping("all")
+    public ResultMap<List<User>> queryAllUser() {
+        return new ResultMap<>(ResultEnum.SUCCESS, userService.queryAllUser());
     }
 }

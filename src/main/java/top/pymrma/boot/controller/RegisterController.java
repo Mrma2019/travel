@@ -7,22 +7,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import top.pymrma.boot.common.ResultEnum;
 import top.pymrma.boot.common.ResultMap;
-import top.pymrma.boot.entity.User;
-import top.pymrma.boot.services.EmailService;
-import top.pymrma.boot.services.UserService;
+import top.pymrma.boot.dto.RegisterDTO;
+import top.pymrma.boot.services.impl.UserServiceImpl;
 
 @RestController
 @RequestMapping("register")
 @RequiredArgsConstructor
 public class RegisterController {
-    private final UserService userService;
-    private final EmailService emailService;
+    private final UserServiceImpl userService;
 
     //用户注册
     @PostMapping
-    public ResultMap<String> register(@RequestBody User user) {
-        emailService.sendSimpleEamil(user.getEmail(), "欢迎注册travel-memory", "您好");
-        userService.addUser(user);
-        return new ResultMap<>(ResultEnum.SUCCESS, "注册成功啦！");
+    public ResultMap<String> register(@RequestBody RegisterDTO dto) {
+        if (!userService.isExists(dto.getEmail())) {
+            userService.register(dto);
+            return new ResultMap<>(ResultEnum.SUCCESS);
+        }
+        return new ResultMap<>(ResultEnum.USER_EXIST);
     }
 }

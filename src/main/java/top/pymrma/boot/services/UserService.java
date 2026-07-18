@@ -1,18 +1,16 @@
 package top.pymrma.boot.services;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import top.pymrma.boot.dto.RegisterDTO;
 import top.pymrma.boot.entity.User;
-import top.pymrma.boot.repository.UserRepository;
 
-@Service
-@RequiredArgsConstructor
-public class UserService {
-    private final UserRepository userRepository;
+import java.util.List;
 
-    @Transactional
-    public void addUser(User user) {
-        userRepository.save(user);
-    }
+public interface UserService {
+    boolean isExists(String email);
+
+    void register(RegisterDTO dto);
+
+    void createUser(User user);
+
+    List<User> queryAllUser();
 }
