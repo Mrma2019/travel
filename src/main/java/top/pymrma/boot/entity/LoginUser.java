@@ -1,12 +1,23 @@
-package top.pymrma.boot.common;
+package top.pymrma.boot.entity;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
 
+@Getter
+@Setter
 public class LoginUser implements UserDetails {
+
+    private User user;
+
+    public LoginUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of();
@@ -14,12 +25,12 @@ public class LoginUser implements UserDetails {
 
     @Override
     public String getPassword() {
-        return "";
+        return user.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return "";
+        return user.getUsername();
     }
 
     @Override

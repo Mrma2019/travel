@@ -7,11 +7,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import top.pymrma.boot.common.PageResult;
+import top.pymrma.boot.converter.UserConverter;
 import top.pymrma.boot.dto.RegisterDTO;
 import top.pymrma.boot.entity.User;
 import top.pymrma.boot.repository.UserRepository;
 import top.pymrma.boot.services.EmailService;
 import top.pymrma.boot.services.UserService;
+import top.pymrma.boot.vo.UserVO;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +24,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final EmailService emailService;
+    private final UserConverter userConverter;
 
     @Override
     public boolean isExists(String email) {
@@ -49,8 +54,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public PageResult<User> findPage(Pageable pageable) {
+    public PageResult<UserVO> findPage(Pageable pageable) {
         Page<User> page = userRepository.findAll(pageable);
-        return PageResult.of(page);
+        Page<UserVO> map = page.map(user ->
+                userConverter.toVO(user)
+        );
+        return PageResult.of(map);
     }
 }

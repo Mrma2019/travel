@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import top.pymrma.boot.common.PageResult;
 import top.pymrma.boot.dto.RegisterDTO;
 import top.pymrma.boot.entity.User;
+import top.pymrma.boot.vo.UserVO;
 
 import java.util.List;
 
@@ -15,5 +16,5 @@ public interface UserService {
 
     void createUser(User user);
 
-    PageResult<User> findPage(Pageable pageable);
+    PageResult<UserVO> findPage(Pageable pageable);
 }

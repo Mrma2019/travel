@@ -9,7 +9,7 @@ import top.pymrma.boot.entity.User;
 public class LoginVO {
     private String token;
 
-    private User user;
+    private UserVO userVO;
 
 
 }
