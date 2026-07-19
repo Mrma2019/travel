@@ -3,6 +3,7 @@ package top.pymrma.boot.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -27,8 +28,11 @@ public class Travel {
     private String title;
     private String story;
     private List<String> photos;
+    @ElementCollection(fetch = FetchType.EAGER)
     private List<String> tags;
-    private Integer rating;
+    private Integer rating = 0;
     private String coverUrl;
+
+    @CreationTimestamp
     private LocalDateTime createdAt;
 }
