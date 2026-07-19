@@ -15,8 +15,6 @@ import top.pymrma.boot.services.EmailService;
 import top.pymrma.boot.services.UserService;
 import top.pymrma.boot.vo.UserVO;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -54,11 +52,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public PageResult<UserVO> findPage(Pageable pageable) {
+    public PageResult<UserVO> queryAllUser(Pageable pageable) {
         Page<User> page = userRepository.findAll(pageable);
-        Page<UserVO> map = page.map(user ->
-                userConverter.toVO(user)
-        );
+        Page<UserVO> map = page.map(userConverter::toVO);
         return PageResult.of(map);
     }
 }

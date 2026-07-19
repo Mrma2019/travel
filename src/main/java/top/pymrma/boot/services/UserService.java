@@ -16,5 +16,5 @@ public interface UserService {
 
     void createUser(User user);
 
-    PageResult<UserVO> findPage(Pageable pageable);
+    PageResult<UserVO> queryAllUser(Pageable pageable);
 }
