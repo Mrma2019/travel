@@ -19,7 +19,8 @@ public class RegisterController {
     //用户注册
     @PostMapping
     public ResultMap<String> register(@RequestBody RegisterDTO dto) {
-        if (!userService.isExists(dto.getEmail())) {
+        //检查是否已注册
+        if (!userService.existsByEmail(dto.getEmail())) {
             userService.register(dto);
             return new ResultMap<>(ResultEnum.SUCCESS);
         }

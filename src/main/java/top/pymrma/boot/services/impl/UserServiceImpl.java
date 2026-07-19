@@ -1,6 +1,7 @@
 package top.pymrma.boot.services.impl;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,6 +18,7 @@ import top.pymrma.boot.vo.UserVO;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
@@ -25,30 +27,34 @@ public class UserServiceImpl implements UserService {
     private final UserConverter userConverter;
 
     @Override
-    public boolean isExists(String email) {
-        return userRepository.existsUserByEmail(email);
+    public boolean existsByEmail(String email) {
+        return userRepository.existsByEmail((email));
     }
 
     @Transactional
     @Override
-    public void register(RegisterDTO dto) {
+    public boolean register(RegisterDTO dto) {
         String encode = passwordEncoder.encode(dto.getPassword());
         User user = new User();
         user.setUsername(dto.getUsername());
         user.setEmail(dto.getEmail());
         user.setPassword(encode);
-        User saved = userRepository.save(user);
-        if (saved.getId() != null) {
+        User savedUser = userRepository.save(user);
+        if (savedUser.getId() != null) {
+            log.info("注册用户-->email：{}", user.getEmail());
             emailService.sendSimpleEamil(user.getEmail(), "travel-memory", "欢迎使用专属你的旅行相册");
+            return true;
         }
+        return false;
     }
 
     @Transactional
     @Override
-    public void createUser(User user) {
+    public boolean createUser(User user) {
         String encode = passwordEncoder.encode(user.getPassword());
         user.setPassword(encode);
-        userRepository.save(user);
+        User savedUser = userRepository.save(user);
+        return savedUser.getId() != null;
     }
 
     @Override

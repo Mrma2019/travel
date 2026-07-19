@@ -9,7 +9,9 @@ import org.springframework.web.servlet.HandlerInterceptor;
 public class HttpRequestInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        log.info("访问路由：{}", request.getRequestURI());
+        String requestURI = request.getRequestURI();
+        String remoteAddr = request.getRemoteAddr();
+        log.info("addr-->{}, url：{}", remoteAddr, requestURI);
         return true;
     }
 }

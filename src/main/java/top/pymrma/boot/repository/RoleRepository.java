@@ -7,4 +7,6 @@ import top.pymrma.boot.entity.Role;
 @Repository
 public interface RoleRepository extends JpaRepository<Role,Long> {
     Role findRoleByCode(String code);
+
+    boolean existsByCode(String code);
 }

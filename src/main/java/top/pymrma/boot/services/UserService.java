@@ -10,11 +10,11 @@ import top.pymrma.boot.vo.UserVO;
 import java.util.List;
 
 public interface UserService {
-    boolean isExists(String email);
+    boolean existsByEmail(String email);
 
-    void register(RegisterDTO dto);
+    boolean register(RegisterDTO dto);
 
-    void createUser(User user);
+    boolean createUser(User user);
 
     PageResult<UserVO> queryAllUser(Pageable pageable);
 }

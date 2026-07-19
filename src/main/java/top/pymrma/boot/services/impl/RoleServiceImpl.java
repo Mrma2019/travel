@@ -15,21 +15,16 @@ public class RoleServiceImpl implements RoleService {
 
     private final RoleRepository roleRepository;
 
-    @Override
-    public boolean isExists(String code) {
-        Role role = roleRepository.findRoleByCode(code);
-        return role != null;
-    }
-
+    //创建角色
     @Transactional
     @Override
     public boolean createRole(Role role) {
-        if (isExists(role.getCode())) {
+        if (roleRepository.existsByCode(role.getCode())) {
             return false;
         }
         role.setCode(role.getCode().toUpperCase());
-        Role saved = roleRepository.save(role);
-        return true;
+        Role savedRole = roleRepository.save(role);
+        return savedRole.getId() != null;
     }
 
     @Override

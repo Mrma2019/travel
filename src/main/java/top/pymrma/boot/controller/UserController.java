@@ -29,6 +29,6 @@ public class UserController {
     //全部用户
     @GetMapping("all")
     public ResultMap queryAllUser(@PageableDefault(size = 10) Pageable pageable) {
-        return new ResultMap<>(ResultEnum.SUCCESS, userService.findPage(pageable));
+        return new ResultMap<>(ResultEnum.SUCCESS, userService.queryAllUser(pageable));
     }
 }
