@@ -1,16 +1,17 @@
 package top.pymrma.boot.services.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import top.pymrma.boot.common.PageResult;
 import top.pymrma.boot.dto.RegisterDTO;
 import top.pymrma.boot.entity.User;
 import top.pymrma.boot.repository.UserRepository;
 import top.pymrma.boot.services.EmailService;
 import top.pymrma.boot.services.UserService;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -22,8 +23,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean isExists(String email) {
-        User user = userRepository.findUserByEmail(email);
-        return user != null;
+        return userRepository.existsUserByEmail(email);
     }
 
     @Transactional
@@ -49,7 +49,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> queryAllUser() {
-        return userRepository.findAll();
+    public PageResult<User> findPage(Pageable pageable) {
+        Page<User> page = userRepository.findAll(pageable);
+        return PageResult.of(page);
     }
 }

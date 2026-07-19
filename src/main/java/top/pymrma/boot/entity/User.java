@@ -1,9 +1,11 @@
 package top.pymrma.boot.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -27,6 +29,7 @@ public class User {
 
     private String password;
 
+    @Column(length = 512)
     private String bio;
 
     @ElementCollection(fetch = FetchType.EAGER)
@@ -34,8 +37,10 @@ public class User {
 
     private String preferences;
 
-    private String status;
+    @Column(columnDefinition = "Char(1)")
+    private Integer status = 0;
 
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_role",
@@ -43,6 +48,9 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "roleId")
     )
     private Set<Role> roles;
+
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 
     @CreationTimestamp
     private LocalDateTime createAt;
