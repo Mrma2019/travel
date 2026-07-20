@@ -1,6 +1,7 @@
 package top.pymrma.boot.except;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -20,11 +21,16 @@ public class HandlerException {
 
     @ExceptionHandler
     public ResultMap handlerException(BadCredentialsException e) {
-        return new ResultMap<>(ResultEnum.LOGIN_FAILED);
+        return new ResultMap<>(ResultEnum.LOGIN_FAILED, e.getMessage());
     }
 
     @ExceptionHandler
     public ResultMap handlerException(HttpRequestMethodNotSupportedException e) {
-        return new ResultMap<>(ResultEnum.METHOD_NOT_ALLOWED);
+        return new ResultMap<>(ResultEnum.METHOD_NOT_ALLOWED, e.getMessage());
+    }
+
+    @ExceptionHandler
+    public ResultMap handlerException(HttpMessageNotReadableException e) {
+        return new ResultMap<>(ResultEnum.PARAM_ERROR, e.getMessage());
     }
 }

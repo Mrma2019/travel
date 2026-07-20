@@ -6,6 +6,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 import top.pymrma.boot.common.ResultEnum;
 import top.pymrma.boot.common.ResultMap;
+import top.pymrma.boot.dto.PageQueryDTO;
 import top.pymrma.boot.entity.Travel;
 import top.pymrma.boot.services.TravelService;
 
@@ -27,8 +28,8 @@ public class TravelController {
     }
 
     @GetMapping("all")
-    public ResultMap queryAllTravels(@PageableDefault(size = 10) Pageable pageable) {
-        return new ResultMap<>(ResultEnum.SUCCESS, travelService.queryAllTravels(pageable));
+    public ResultMap queryAllTravels(@RequestBody PageQueryDTO queryDTO) {
+        return new ResultMap<>(ResultEnum.SUCCESS, travelService.queryAllTravels(queryDTO.toPageable()));
     }
 
 }
