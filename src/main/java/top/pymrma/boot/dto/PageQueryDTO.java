@@ -9,8 +9,8 @@ import org.springframework.data.domain.Sort;
 public class PageQueryDTO {
     private Integer page = 1;
     private Integer size = 10;
-    private String sortField = "createAt";
-    private String sortOrder = "desc";
+    private String sortField = "id";
+    private String sortOrder = "asc";
 
     public Pageable toPageable() {
         int pageNum = Math.max(0, (page == null ? 1 : page) - 1);

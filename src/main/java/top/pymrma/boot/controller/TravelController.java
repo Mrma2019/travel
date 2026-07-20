@@ -27,9 +27,15 @@ public class TravelController {
         }
     }
 
-    @GetMapping("all")
+    @PostMapping("all")
     public ResultMap queryAllTravels(@RequestBody PageQueryDTO queryDTO) {
         return new ResultMap<>(ResultEnum.SUCCESS, travelService.queryAllTravels(queryDTO.toPageable()));
+    }
+
+    @GetMapping("del/{id}")
+    public ResultMap delTravel(@PathVariable Long id) {
+        boolean deleted = travelService.deleteById(id);
+        return deleted ? new ResultMap<>(ResultEnum.SUCCESS) : new ResultMap<>(ResultEnum.DATABASE_ERROR);
     }
 
 }

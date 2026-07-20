@@ -31,7 +31,11 @@ public class TravelServiceImpl implements TravelService {
 
     @Override
     public boolean deleteById(Long id) {
-        travelRepository.deleteById(id);
-        return true;
+        try {
+            travelRepository.deleteById(id);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
     }
 }

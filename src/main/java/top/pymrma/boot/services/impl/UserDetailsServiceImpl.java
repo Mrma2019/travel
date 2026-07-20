@@ -23,7 +23,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException("用户不存在");
         }
-        log.info("用户登录-->email：{}", user.getEmail());
+//        log.info("用户登录-->email：{}", user.getEmail());
         return new LoginUser(user);
     }
 }

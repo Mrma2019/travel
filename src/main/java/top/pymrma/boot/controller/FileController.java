@@ -17,9 +17,17 @@ import java.io.IOException;
 public class FileController {
     private final FileService fileService;
 
-    @PostMapping("upload")
-    public ResultMap upload(MultipartFile[] files) throws IOException {
+    //多文件上传
+    @PostMapping("uploads/")
+    public ResultMap uploadFiles(MultipartFile[] files) throws IOException {
         fileService.upload(files);
+        return new ResultMap<>(ResultEnum.SUCCESS);
+    }
+
+    //单文件上传
+    @PostMapping("upload")
+    public ResultMap uploadFile(MultipartFile file) throws IOException {
+        fileService.upload(file);
         return new ResultMap<>(ResultEnum.SUCCESS);
     }
 

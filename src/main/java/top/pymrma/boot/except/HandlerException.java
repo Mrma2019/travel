@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import top.pymrma.boot.common.ResultEnum;
 import top.pymrma.boot.common.ResultMap;
 
@@ -32,5 +33,10 @@ public class HandlerException {
     @ExceptionHandler
     public ResultMap handlerException(HttpMessageNotReadableException e) {
         return new ResultMap<>(ResultEnum.PARAM_ERROR, e.getMessage());
+    }
+
+    @ExceptionHandler
+    public ResultMap handlerException(MaxUploadSizeExceededException e) {
+        return new ResultMap(ResultEnum.FILE_UPLOAD_ERROR, e.getMessage());
     }
 }

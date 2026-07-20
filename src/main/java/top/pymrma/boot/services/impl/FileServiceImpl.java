@@ -11,6 +11,8 @@ import top.pymrma.boot.utils.DateUtil;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.UUID;
 
 @Slf4j
@@ -21,26 +23,34 @@ public class FileServiceImpl implements FileService {
     @Value("${file.upload.dir}")
     private String uploadDir;
 
+    private String currentDate;
+    private String year;
+    private String month;
+
+    @Override
+    public boolean createFile(MultipartFile file) throws IOException {
+        return false;
+    }
+
+    // 多文件上传
     @Override
     public boolean upload(MultipartFile[] files) throws IOException {
-        String currentDate = DateUtil.formatDate(new Date(System.currentTimeMillis()), "yyyyMMdd");
-
-        File destPath = new File(uploadDir + currentDate);
-        if (!destPath.exists()) {
-            boolean created = destPath.mkdirs();
-            if (!created) {
-                log.error("目标目录创建失败！{}", destPath);
-            }
-        }
+        File destPath = getOrCreateDirectory();
 
         for (MultipartFile file : files) {
-            String originalFilename = file.getOriginalFilename();
-            String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
-            UUID uuid = UUID.randomUUID();
-            String fileName = uuid + "-" + currentDate + extension;
-
+            String fileName = generateFileName(file);
             file.transferTo(new File(destPath + File.separator + fileName));
         }
+        return false;
+    }
+
+    //单文件上传
+    @Override
+    public boolean upload(MultipartFile file) throws IOException {
+        File destPath = getOrCreateDirectory();
+        String fileName = generateFileName(file);
+        log.info("fullpath:{}", destPath + File.separator + fileName);
+        file.transferTo(new File(destPath + File.separator + fileName));
         return false;
     }
 
@@ -48,4 +58,31 @@ public class FileServiceImpl implements FileService {
     public void download() {
 
     }
+
+    public File getOrCreateDirectory() {
+        currentDate = DateUtil.formatDate(new Date(System.currentTimeMillis()), "yyyyMMdd");
+        year = String.valueOf(LocalDate.now().getYear());
+        month = String.valueOf(LocalDate.now().getMonth());
+
+        File destPath = new File(uploadDir + year + File.separator + month);
+        if (!destPath.exists()) {
+            boolean created = destPath.mkdirs();
+            if (!created) {
+                log.error("目标目录创建失败！{}", destPath);
+            }
+        }
+
+        return destPath;
+    }
+
+    public String generateFileName(MultipartFile file) {
+        String originalFilename = file.getOriginalFilename();
+        String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
+        UUID uuid = UUID.randomUUID();
+        String fileName = uuid + "-" + currentDate + extension;
+
+        return fileName;
+    }
+
+
 }
