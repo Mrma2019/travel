@@ -28,4 +28,10 @@ public class TravelServiceImpl implements TravelService {
         PageResult<Travel> result = PageResult.of(travelRepository.findAll(pageable));
         return result;
     }
+
+    @Override
+    public boolean deleteById(Long id) {
+        travelRepository.deleteById(id);
+        return true;
+    }
 }

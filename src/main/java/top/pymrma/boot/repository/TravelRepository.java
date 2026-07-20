@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import top.pymrma.boot.entity.Travel;
 
 @Repository
-public interface TravelRepository extends JpaRepository<Travel, Integer> {
+public interface TravelRepository extends JpaRepository<Travel, Long> {
 }

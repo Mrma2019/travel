@@ -9,4 +9,6 @@ public interface TravelService {
     boolean createTravel(Travel travel);
 
     PageResult<Travel> queryAllTravels(Pageable pageable);
+
+    boolean deleteById(Long id);
 }

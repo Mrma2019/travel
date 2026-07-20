@@ -11,7 +11,7 @@ public class HttpRequestInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String requestURI = request.getRequestURI();
         String remoteAddr = request.getRemoteAddr();
-        log.info("IP-->{}, url-->{}", remoteAddr, requestURI);
+        log.info("IP-->{}, 访问 url：{}", remoteAddr, requestURI);
         return true;
     }
 }

@@ -2,6 +2,7 @@ package top.pymrma.boot.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 import top.pymrma.boot.common.ResultEnum;
 import top.pymrma.boot.common.ResultMap;
@@ -26,7 +27,7 @@ public class TravelController {
     }
 
     @GetMapping("all")
-    public ResultMap queryAllTravels(Pageable pageable) {
+    public ResultMap queryAllTravels(@PageableDefault(size = 10) Pageable pageable) {
         return new ResultMap<>(ResultEnum.SUCCESS, travelService.queryAllTravels(pageable));
     }
 
