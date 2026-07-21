@@ -53,12 +53,6 @@ public class FileServiceImpl implements FileService {
         return destPath + fileName;
     }
 
-    @Override
-    public void download() {
-
-    }
-
-
     //创建目录
     public String getOrCreateDirectory() {
         String year = String.valueOf(LocalDate.now().getYear());

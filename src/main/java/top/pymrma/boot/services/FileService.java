@@ -12,6 +12,4 @@ public interface FileService {
 
     String upload(MultipartFile file) throws IOException;
 
-    void download() throws IOException;
-
 }
