@@ -28,7 +28,7 @@ public class UserController {
     }
 
     //全部用户
-    @GetMapping("all")
+    @PostMapping("all")
     public ResultMap queryAllUser(@RequestBody PageQueryDTO queryDTO) {
         return new ResultMap<>(ResultEnum.SUCCESS, userService.queryAllUser(queryDTO.toPageable()));
     }

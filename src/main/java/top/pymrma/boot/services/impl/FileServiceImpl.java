@@ -23,10 +23,6 @@ public class FileServiceImpl implements FileService {
     @Value("${file.upload.dir}")
     private String uploadDir;
 
-    private String currentDate;
-    private String year;
-    private String month;
-
     @Override
     public boolean createFile(MultipartFile file) throws IOException {
         return false;
@@ -35,11 +31,11 @@ public class FileServiceImpl implements FileService {
     // 多文件上传
     @Override
     public boolean upload(MultipartFile[] files) throws IOException {
-        File destPath = getOrCreateDirectory();
+        File fullPath = getOrCreateDirectory();
 
         for (MultipartFile file : files) {
             String fileName = generateFileName(file);
-            file.transferTo(new File(destPath + File.separator + fileName));
+            file.transferTo(new File(fullPath + File.separator + fileName));
         }
         return false;
     }
@@ -47,10 +43,10 @@ public class FileServiceImpl implements FileService {
     //单文件上传
     @Override
     public boolean upload(MultipartFile file) throws IOException {
-        File destPath = getOrCreateDirectory();
+        File fullPath = getOrCreateDirectory();
+
         String fileName = generateFileName(file);
-        log.info("fullpath:{}", destPath + File.separator + fileName);
-        file.transferTo(new File(destPath + File.separator + fileName));
+        file.transferTo(new File(fullPath + File.separator + fileName));
         return false;
     }
 
@@ -59,23 +55,31 @@ public class FileServiceImpl implements FileService {
 
     }
 
-    public File getOrCreateDirectory() {
-        currentDate = DateUtil.formatDate(new Date(System.currentTimeMillis()), "yyyyMMdd");
-        year = String.valueOf(LocalDate.now().getYear());
-        month = String.valueOf(LocalDate.now().getMonth());
 
-        File destPath = new File(uploadDir + year + File.separator + month);
-        if (!destPath.exists()) {
-            boolean created = destPath.mkdirs();
+    //创建目录
+    public File getOrCreateDirectory() {
+        String year = String.valueOf(LocalDate.now().getYear());
+        String month = String.valueOf(LocalDate.now().getMonth()).toLowerCase();
+
+        if (uploadDir.endsWith(File.separator)) {
+            uploadDir = uploadDir + File.separator;
+        }
+
+        String destPath = year + File.separator + month + File.separator;
+        File fullPath = new File(uploadDir + destPath);
+        if (!fullPath.exists()) {
+            boolean created = fullPath.mkdirs();
             if (!created) {
                 log.error("目标目录创建失败！{}", destPath);
             }
         }
 
-        return destPath;
+        return fullPath;
     }
 
+    //生成文件名
     public String generateFileName(MultipartFile file) {
+        String currentDate = DateUtil.formatDate(new Date(System.currentTimeMillis()), "yyyyMMdd");
         String originalFilename = file.getOriginalFilename();
         String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
         UUID uuid = UUID.randomUUID();
