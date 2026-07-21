@@ -1,5 +1,6 @@
 package top.pymrma.boot.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,6 +16,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "travels")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Travel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

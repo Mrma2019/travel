@@ -21,11 +21,10 @@ import java.io.IOException;
 public class TravelController {
 
     private final TravelService travelService;
+    private final ObjectMapper objectMapper;
 
     @PostMapping("add")
-    public ResultMap addTravel(@RequestParam("travel") String travelJson, @RequestParam("file") MultipartFile file) throws IOException {
-
-        ObjectMapper objectMapper = new ObjectMapper();
+    public ResultMap addTravel(@RequestPart("travel") String travelJson, @RequestPart("file") MultipartFile file) throws IOException {
         Travel travel = objectMapper.readValue(travelJson, Travel.class);
 
         boolean created = travelService.createTravel(travel, file);
