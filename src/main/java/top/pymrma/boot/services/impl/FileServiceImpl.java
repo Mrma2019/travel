@@ -30,24 +30,22 @@ public class FileServiceImpl implements FileService {
 
     // 多文件上传
     @Override
-    public boolean upload(MultipartFile[] files) throws IOException {
+    public void upload(MultipartFile[] files) throws IOException {
         File fullPath = getOrCreateDirectory();
 
         for (MultipartFile file : files) {
             String fileName = generateFileName(file);
             file.transferTo(new File(fullPath + File.separator + fileName));
         }
-        return false;
     }
 
     //单文件上传
     @Override
-    public boolean upload(MultipartFile file) throws IOException {
+    public void upload(MultipartFile file) throws IOException {
         File fullPath = getOrCreateDirectory();
 
         String fileName = generateFileName(file);
         file.transferTo(new File(fullPath + File.separator + fileName));
-        return false;
     }
 
     @Override
