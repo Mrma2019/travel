@@ -7,10 +7,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import top.pymrma.boot.common.PageResult;
+import top.pymrma.boot.converter.TravelConverter;
 import top.pymrma.boot.entity.Travel;
 import top.pymrma.boot.repository.TravelRepository;
 import top.pymrma.boot.services.FileService;
 import top.pymrma.boot.services.TravelService;
+import top.pymrma.boot.vo.TravelVO;
 
 import java.io.IOException;
 
@@ -20,6 +22,7 @@ public class TravelServiceImpl implements TravelService {
 
     private final TravelRepository travelRepository;
     private final FileService fileService;
+    private final TravelConverter travelConverter;
 
     @Transactional
     @Override
@@ -31,9 +34,9 @@ public class TravelServiceImpl implements TravelService {
     }
 
     @Override
-    public PageResult<Travel> queryAllTravels(Pageable pageable) {
-        PageResult<Travel> result = PageResult.of(travelRepository.findAll(pageable));
-        return result;
+    public PageResult<TravelVO> queryAllTravels(Pageable pageable) {
+        Page<TravelVO> map = travelRepository.findAll(pageable).map(travelConverter::toVO);
+        return PageResult.of(map);
     }
 
     @Override

@@ -38,6 +38,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // 注册放行\登录放行
                         .requestMatchers("/register", "/login").permitAll()
+                        .requestMatchers("/file/**").permitAll()
                         // 允许OPTIONS预检请求
                         .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**").permitAll()
                         .anyRequest().authenticated()

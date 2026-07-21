@@ -16,6 +16,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "travels")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Travel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
