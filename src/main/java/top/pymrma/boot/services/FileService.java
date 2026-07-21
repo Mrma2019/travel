@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.util.List;
 
 public interface FileService {
-    boolean createFile(MultipartFile file) throws IOException;
 
     List<String> upload(MultipartFile[] files) throws IOException;
 

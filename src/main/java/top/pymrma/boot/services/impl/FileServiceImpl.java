@@ -28,11 +28,6 @@ public class FileServiceImpl implements FileService {
 
     private File fullPath;
 
-    @Override
-    public boolean createFile(MultipartFile file) throws IOException {
-        return false;
-    }
-
     // 多文件上传
     @Override
     public List<String> upload(MultipartFile[] files) throws IOException {
