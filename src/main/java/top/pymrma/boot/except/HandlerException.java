@@ -11,6 +11,8 @@ import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import top.pymrma.boot.common.ResultEnum;
 import top.pymrma.boot.common.ResultMap;
 
+import java.io.FileNotFoundException;
+
 @RestControllerAdvice
 @Slf4j
 public class HandlerException {
@@ -38,5 +40,10 @@ public class HandlerException {
     @ExceptionHandler
     public ResultMap handlerException(MaxUploadSizeExceededException e) {
         return new ResultMap(ResultEnum.FILE_UPLOAD_ERROR, e.getMessage());
+    }
+
+    @ExceptionHandler
+    public ResultMap handlerException(FileNotFoundException e) {
+        return new ResultMap(ResultEnum.FILE_NOT_FOUND, e.getMessage());
     }
 }
