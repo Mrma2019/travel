@@ -2,10 +2,10 @@ package top.pymrma.boot.services.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import top.pymrma.boot.entity.File;
+import top.pymrma.boot.properties.FileProperties;
 import top.pymrma.boot.repository.FileRepository;
 import top.pymrma.boot.services.FileService;
 import top.pymrma.boot.utils.DateUtil;
@@ -25,9 +25,7 @@ import java.util.UUID;
 public class FileServiceImpl implements FileService {
 
     private final FileRepository fileRepository;
-
-    @Value("${file.upload.dir}")
-    private String uploadDir;
+    private final FileProperties fileProperties;
     private java.io.File fullPath;
 
     @Override
@@ -70,6 +68,7 @@ public class FileServiceImpl implements FileService {
     public String getOrCreateDirectory() {
         String year = String.valueOf(LocalDate.now().getYear());
         String month = String.valueOf(LocalDate.now().getMonth()).toLowerCase();
+        String uploadDir = fileProperties.getUploadDir();
 
         if (!uploadDir.endsWith(java.io.File.separator)) {
             uploadDir = uploadDir + java.io.File.separator;
@@ -100,6 +99,5 @@ public class FileServiceImpl implements FileService {
 
         return fileName;
     }
-
 
 }

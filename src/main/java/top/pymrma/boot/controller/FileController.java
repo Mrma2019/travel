@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import top.pymrma.boot.common.ResultEnum;
 import top.pymrma.boot.common.ResultMap;
+import top.pymrma.boot.properties.FileProperties;
 import top.pymrma.boot.services.FileService;
 
 import java.io.File;
@@ -24,8 +25,7 @@ import java.nio.file.Paths;
 @RequestMapping("file")
 public class FileController {
     private final FileService fileService;
-    @Value("${file.upload.dir}")
-    private String uploadDir;
+    private final FileProperties fileProperties;
 
     //多文件上传
     @PostMapping("uploads/")
@@ -47,7 +47,7 @@ public class FileController {
             @PathVariable String month,
             @PathVariable String filename
     ) throws IOException {
-        Path filePath = Paths.get(uploadDir, year, month, filename);
+        Path filePath = Paths.get(fileProperties.getUploadDir(), year, month, filename);
         File file = new File(filePath.toString());
         byte[] fileContent = Files.readAllBytes(file.toPath());
         String contentType = getContentType(filename);

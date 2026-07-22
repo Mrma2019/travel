@@ -18,6 +18,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import top.pymrma.boot.filter.JwtAuthenticationEntryPoint;
 import top.pymrma.boot.filter.JwtAuthenticationFilter;
+import top.pymrma.boot.properties.SecurityProperties;
 
 import java.util.List;
 
@@ -28,6 +29,7 @@ public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final JwtAuthenticationEntryPoint authenticationEntryPoint;
+    private final SecurityProperties securityProperties;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -37,8 +39,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         // 注册放行\登录放行
-                        .requestMatchers("/register", "/login").permitAll()
-                        .requestMatchers("/file/**").permitAll()
+                        .requestMatchers(securityProperties.getWhitelist()).permitAll()
                         // 允许OPTIONS预检请求
                         .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**").permitAll()
                         .anyRequest().authenticated()

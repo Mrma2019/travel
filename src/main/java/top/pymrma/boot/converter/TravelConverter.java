@@ -2,18 +2,14 @@ package top.pymrma.boot.converter;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.Named;
 import top.pymrma.boot.entity.Travel;
+import top.pymrma.boot.converter.utils.FileUrlResolver;
 import top.pymrma.boot.vo.TravelVO;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = FileUrlResolver.class)
 public interface TravelConverter {
 
-    @Mapping(target = "coverUrl", qualifiedByName = "convertToWebPath")
+    @Mapping(target = "coverUrl", qualifiedByName = "toUrl")
+    @Mapping(target = "createdAt", dateFormat = "yyyy-MM-dd HH:mm:ss")
     TravelVO toVO(Travel travel);
-
-    @Named("convertToWebPath")
-    default String convertToWebPath(String coverUrl) {
-        return "http://localhost:8080/file/" + coverUrl.replace("\\", "/");
-    }
 }

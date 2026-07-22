@@ -21,5 +21,5 @@ public class TravelVO {
     private List<String> tags;
     private Integer rating = 0;
     private String coverUrl;
-    private LocalDateTime createdAt;
+    private String createdAt;
 }
