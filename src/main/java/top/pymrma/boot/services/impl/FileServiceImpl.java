@@ -39,9 +39,9 @@ public class FileServiceImpl implements FileService {
     public List<String> upload(MultipartFile[] files) throws IOException {
         List<String> destPathList = new ArrayList<>();
         for (MultipartFile file : files) {
-            String destPath = getOrCreateDirectory();
-
             String fileName = generateFileName(file);
+            String destPath = getOrCreateDirectory();
+            destPath = destPath + fileName;
             Path path = Paths.get(fullPath.getPath(), fileName);
             file.transferTo(path);
 

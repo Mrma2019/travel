@@ -1,8 +1,13 @@
 package top.pymrma.boot.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -11,6 +16,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "photos")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Photo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,13 +29,20 @@ public class Photo {
     private String location;
     private LocalDateTime takenAt;
     private String travelId;
+
     @ElementCollection(fetch = FetchType.EAGER)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<String> tags;
+
     private Long size;
     private Integer width;
     private Integer height;
+
+    @CreationTimestamp
     private LocalDateTime createdAt;
+
     private String story;
     private String storyTitle;
+    @UpdateTimestamp
     private LocalDateTime storyUpdatedAt;
 }

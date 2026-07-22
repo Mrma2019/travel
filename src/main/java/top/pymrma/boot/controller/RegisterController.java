@@ -21,7 +21,7 @@ public class RegisterController {
     public ResultMap<String> register(@RequestBody RegisterDTO dto) {
         //检查是否已注册
         if (!userService.existsByEmail(dto.getEmail())) {
-            userService.register(dto);
+            boolean created = userService.register(dto);
             return new ResultMap<>(ResultEnum.SUCCESS);
         }
         return new ResultMap<>(ResultEnum.USER_EXIST);

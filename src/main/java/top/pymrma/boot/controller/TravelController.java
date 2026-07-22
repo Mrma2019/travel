@@ -26,16 +26,12 @@ public class TravelController {
     @PostMapping("add")
     public ResultMap addTravel(@RequestPart("travel") String travelJson, @RequestPart("file") MultipartFile file) throws IOException {
         Travel travel = objectMapper.readValue(travelJson, Travel.class);
-
         boolean created = travelService.createTravel(travel, file);
-        if (created) {
-            return new ResultMap<>(ResultEnum.SUCCESS);
-        } else {
-            return new ResultMap<>(ResultEnum.DATABASE_ERROR);
-        }
+        return created ? new ResultMap<>(ResultEnum.SUCCESS) : new ResultMap<>(ResultEnum.DATABASE_ERROR);
+
     }
 
-    @PostMapping("all")
+    @PostMapping("query/all")
     public ResultMap queryAllTravels(@RequestBody PageQueryDTO queryDTO) {
         return new ResultMap<>(ResultEnum.SUCCESS, travelService.queryAllTravels(queryDTO.toPageable()));
     }
