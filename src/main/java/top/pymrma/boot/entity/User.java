@@ -2,8 +2,7 @@ package top.pymrma.boot.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -16,6 +15,14 @@ import java.util.Set;
 @Getter
 @Setter
 public class User {
+
+    public User() {
+        this.preferences = Preferences.builder()
+                .theme("carton")
+                .language("zh")
+                .build();
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,6 +31,7 @@ public class User {
     private String username;
 
     private String avatarUrl;
+
     @Column(nullable = false, unique = true)
     private String email;
 
@@ -35,7 +43,8 @@ public class User {
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> hobbies;
 
-    private String preferences;
+    @Embedded
+    private Preferences preferences;
 
     @Column(columnDefinition = "Char(1)")
     private Integer status = 0;
@@ -54,4 +63,14 @@ public class User {
 
     @CreationTimestamp
     private LocalDateTime createAt;
+
+    @Embeddable
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class Preferences {
+        private String theme;
+        private String language;
+    }
 }
