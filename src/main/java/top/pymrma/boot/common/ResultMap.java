@@ -1,10 +1,12 @@
 package top.pymrma.boot.common;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.HashMap;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class ResultMap<T> extends HashMap<String, Object> {
 
     public ResultMap() {

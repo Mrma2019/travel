@@ -1,6 +1,5 @@
 package top.pymrma.boot.services;
 
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 import top.pymrma.boot.common.PageResult;

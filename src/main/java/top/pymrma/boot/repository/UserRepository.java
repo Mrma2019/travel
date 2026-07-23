@@ -8,7 +8,5 @@ import top.pymrma.boot.entity.User;
 public interface UserRepository extends JpaRepository<User, Long> {
     User findUserByEmail(String email);
 
-    boolean existsUserByEmail(String email);
-
     boolean existsByEmail(String email);
 }

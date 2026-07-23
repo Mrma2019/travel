@@ -13,7 +13,7 @@ import top.pymrma.boot.entity.TimeLine;
 import top.pymrma.boot.services.TimeLineService;
 
 @RestController
-@RequestMapping("timeline")
+@RequestMapping("time-line")
 @RequiredArgsConstructor
 public class TimeLineController {
 

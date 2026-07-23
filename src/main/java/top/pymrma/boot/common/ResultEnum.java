@@ -1,5 +1,8 @@
 package top.pymrma.boot.common;
 
+import lombok.Getter;
+
+@Getter
 public enum ResultEnum {
     // 成功
     SUCCESS(0, "success"),
@@ -40,27 +43,11 @@ public enum ResultEnum {
     // 限流
     TOO_MANY_REQUEST(6001, "请求过于频繁");
 
-    private int code;
-    private String msg;
+    private final int code;
+    private final String msg;
 
     ResultEnum(int code, String msg) {
         this.code = code;
-        this.msg = msg;
-    }
-
-    public int getCode() {
-        return code;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
-    }
-
-    public String getMsg() {
-        return msg;
-    }
-
-    public void setMsg(String msg) {
         this.msg = msg;
     }
 }

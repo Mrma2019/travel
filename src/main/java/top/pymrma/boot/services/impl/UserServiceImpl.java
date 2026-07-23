@@ -12,7 +12,6 @@ import top.pymrma.boot.converter.UserConverter;
 import top.pymrma.boot.dto.RegisterDTO;
 import top.pymrma.boot.entity.User;
 import top.pymrma.boot.repository.UserRepository;
-import top.pymrma.boot.services.EmailService;
 import top.pymrma.boot.services.UserService;
 import top.pymrma.boot.vo.UserVO;
 

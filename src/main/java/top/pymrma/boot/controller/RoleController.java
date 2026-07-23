@@ -19,7 +19,8 @@ public class RoleController {
 
     @PostMapping("add")
     public ResultMap<String> role(@RequestBody Role role) {
-        roleService.createRole(role);
-        return new ResultMap(ResultEnum.SUCCESS);
+        boolean created = roleService.createRole(role);
+        return created ?
+                new ResultMap<>(ResultEnum.SUCCESS) : new ResultMap<>(ResultEnum.DATABASE_ERROR);
     }
 }

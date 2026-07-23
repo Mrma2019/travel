@@ -1,4 +1,4 @@
-package top.pymrma.boot.services;
+package top.pymrma.boot.services.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
