@@ -22,14 +22,14 @@ public class UserController {
 
     //添加用户
     @PostMapping("add")
-    public ResultMap createUser(@RequestBody User user) {
+    public ResultMap<String> createUser(@RequestBody User user) {
         boolean created = userService.createUser(user);
         return created ? new ResultMap<>(ResultEnum.SUCCESS) : new ResultMap<>(ResultEnum.DATABASE_ERROR);
     }
 
     //全部用户
     @PostMapping("query/all")
-    public ResultMap queryAllUser(@RequestBody PageQueryDTO queryDTO) {
+    public ResultMap<PageResult> queryAllUser(@RequestBody PageQueryDTO queryDTO) {
         return new ResultMap<>(ResultEnum.SUCCESS, userService.queryAllUser(queryDTO.toPageable()));
     }
 }

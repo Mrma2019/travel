@@ -16,8 +16,6 @@ public interface UserConverter {
     @Mapping(target = "status", qualifiedByName = "statusConverter")
     UserVO toVO(User user);
 
-    List<UserVO> toVOList(List<User> users);
-
     default String map(LocalDateTime localDateTime) {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         return localDateTime.format(dtf);

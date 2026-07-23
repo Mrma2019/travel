@@ -18,7 +18,7 @@ public class RoleController {
     private final RoleService roleService;
 
     @PostMapping("add")
-    public ResultMap role(@RequestBody Role role) {
+    public ResultMap<String> role(@RequestBody Role role) {
         roleService.createRole(role);
         return new ResultMap(ResultEnum.SUCCESS);
     }

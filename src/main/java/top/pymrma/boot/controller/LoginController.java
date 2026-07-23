@@ -13,7 +13,6 @@ import top.pymrma.boot.common.ResultEnum;
 import top.pymrma.boot.common.ResultMap;
 import top.pymrma.boot.converter.UserConverter;
 import top.pymrma.boot.dto.LoginDTO;
-import top.pymrma.boot.services.UserService;
 import top.pymrma.boot.utils.JWTUtil;
 import top.pymrma.boot.vo.LoginVO;
 import top.pymrma.boot.vo.UserVO;
@@ -25,19 +24,18 @@ public class LoginController {
 
     private final AuthenticationManager authenticationManager;
     private final JWTUtil jwtUtil;
-    private final UserService userService;
     private final UserConverter userConverter;
 
     @PostMapping
-    public ResultMap login(@RequestBody LoginDTO dto) {
+    public ResultMap<LoginVO> login(@RequestBody LoginDTO dto) {
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
-                dto.getEmail(),
-                dto.getPassword());
+                dto.email(),
+                dto.password());
         Authentication authenticate = authenticationManager.authenticate(token);
         LoginUser loginUser = (LoginUser) authenticate.getPrincipal();
 
         //生成token
-        String jwt = jwtUtil.generateToken(dto.getEmail());
+        String jwt = jwtUtil.generateToken(dto.email());
 
         UserVO userVO = userConverter.toVO(loginUser.getUser());
         LoginVO loginVO = new LoginVO(jwt, userVO);

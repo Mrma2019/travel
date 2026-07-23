@@ -4,12 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import top.pymrma.boot.entity.User;
 
-@Data
-@AllArgsConstructor
-public class LoginVO {
-    private String token;
 
-    private UserVO userVO;
-
-
+public record LoginVO(
+        String token,
+        UserVO userVO
+) {
 }

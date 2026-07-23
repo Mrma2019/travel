@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import top.pymrma.boot.common.PageResult;
 import top.pymrma.boot.common.ResultEnum;
 import top.pymrma.boot.common.ResultMap;
 import top.pymrma.boot.dto.PageQueryDTO;
@@ -24,7 +25,7 @@ public class TravelController {
     private final ObjectMapper objectMapper;
 
     @PostMapping("add")
-    public ResultMap addTravel(@RequestPart("travel") String travelJson, @RequestPart("file") MultipartFile file) throws IOException {
+    public ResultMap<String> addTravel(@RequestPart("travel") String travelJson, @RequestPart("file") MultipartFile file) throws IOException {
         Travel travel = objectMapper.readValue(travelJson, Travel.class);
         boolean created = travelService.createTravel(travel, file);
         return created ? new ResultMap<>(ResultEnum.SUCCESS) : new ResultMap<>(ResultEnum.DATABASE_ERROR);
@@ -32,12 +33,12 @@ public class TravelController {
     }
 
     @PostMapping("query/all")
-    public ResultMap queryAllTravels(@RequestBody PageQueryDTO queryDTO) {
+    public ResultMap<PageResult> queryAllTravels(@RequestBody PageQueryDTO queryDTO) {
         return new ResultMap<>(ResultEnum.SUCCESS, travelService.queryAllTravels(queryDTO.toPageable()));
     }
 
     @GetMapping("del/{id}")
-    public ResultMap delTravel(@PathVariable Long id) {
+    public ResultMap<String> delTravel(@PathVariable Long id) {
         boolean deleted = travelService.deleteById(id);
         return deleted ? new ResultMap<>(ResultEnum.SUCCESS) : new ResultMap<>(ResultEnum.DATABASE_ERROR);
     }

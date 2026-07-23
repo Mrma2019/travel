@@ -1,6 +1,5 @@
 package top.pymrma.boot.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +22,7 @@ public class PhotoController {
     private final ObjectMapper objectMapper;
 
     @PostMapping("add")
-    public ResultMap<String> craetePhoto(@RequestPart("photos") String photoJson, @RequestPart("files") MultipartFile[] files) throws IOException {
+    public ResultMap<String> createPhotos(@RequestPart("photos") String photoJson, @RequestPart("files") MultipartFile[] files) throws IOException {
         Photo photos = objectMapper.readValue(photoJson, Photo.class);
         boolean created = photoService.createPhotos(photos, files);
 
@@ -32,6 +31,17 @@ public class PhotoController {
 
     @PostMapping("query/all")
     public ResultMap<PageResult> queryAllPhotos(@RequestBody PageQueryDTO queryDTO) {
-        return new ResultMap<>(ResultEnum.SUCCESS, photoService.queryAllPhotos(queryDTO.toPageable()));
+        return new ResultMap<>(
+                ResultEnum.SUCCESS,
+                photoService.queryAllPhotos(queryDTO.toPageable())
+        );
+    }
+
+    @PostMapping("query/{travelId}")
+    public ResultMap<PageResult> queryPhotosByTravelId(@PathVariable Long travelId, @RequestBody PageQueryDTO queryDTO) {
+        return new ResultMap<>(
+                ResultEnum.SUCCESS,
+                photoService.queryPhotosByTravelId(queryDTO.toPageable(), travelId)
+        );
     }
 }

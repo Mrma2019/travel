@@ -12,4 +12,6 @@ public interface PhotoService {
     boolean createPhotos(Photo photo, MultipartFile[] files) throws IOException;
 
     PageResult<PhotoVO> queryAllPhotos(Pageable pageable);
+
+    PageResult<PhotoVO> queryPhotosByTravelId(Pageable pageable, Long travelId);
 }

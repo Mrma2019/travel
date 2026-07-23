@@ -16,13 +16,6 @@ import java.util.Set;
 @Setter
 public class User {
 
-    public User() {
-        this.preferences = Preferences.builder()
-                .theme("carton")
-                .language("zh")
-                .build();
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -65,12 +58,13 @@ public class User {
     private LocalDateTime createAt;
 
     @Embeddable
-    @Data
-    @Builder
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class Preferences {
-        private String theme;
-        private String language;
+    public record Preferences(
+            String theme,
+            String language
+    ) {
+        public Preferences {
+            theme = "carton";
+            language = "zh";
+        }
     }
 }

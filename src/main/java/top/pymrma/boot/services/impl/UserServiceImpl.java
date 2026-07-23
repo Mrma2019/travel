@@ -34,10 +34,10 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public boolean register(RegisterDTO dto) {
-        String encode = passwordEncoder.encode(dto.getPassword());
+        String encode = passwordEncoder.encode(dto.password());
         User user = new User();
-        user.setUsername(dto.getUsername());
-        user.setEmail(dto.getEmail());
+        user.setUsername(dto.username());
+        user.setEmail(dto.email());
         user.setPassword(encode);
         User savedUser = userRepository.save(user);
         if (savedUser.getId() != null) {
@@ -60,7 +60,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public PageResult<UserVO> queryAllUser(Pageable pageable) {
         Page<User> page = userRepository.findAll(pageable);
-        Page<UserVO> map = page.map(userConverter::toVO);
-        return PageResult.of(map);
+        Page<UserVO> userPage = page.map(userConverter::toVO);
+        return PageResult.of(userPage);
     }
 }

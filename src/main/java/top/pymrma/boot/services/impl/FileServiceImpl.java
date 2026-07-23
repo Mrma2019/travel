@@ -88,16 +88,17 @@ public class FileServiceImpl implements FileService {
 
     //生成文件名
     public String generateFileName(MultipartFile file) {
-        String currentDate = DateUtil.formatDate(new Date(System.currentTimeMillis()), "yyyyMMdd");
+        String currentDate =
+                DateUtil.formatDate(new Date(System.currentTimeMillis()), "yyyyMMdd");
+        UUID uuid = UUID.randomUUID();
+
         String originalFilename = file.getOriginalFilename();
         String extension = null;
         if (originalFilename != null) {
             extension = originalFilename.substring(originalFilename.lastIndexOf("."));
         }
-        UUID uuid = UUID.randomUUID();
-        String fileName = uuid + "-" + currentDate + extension;
 
-        return fileName;
+        return uuid + "-" + currentDate + extension;
     }
 
 }

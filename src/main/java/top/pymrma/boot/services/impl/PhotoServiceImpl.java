@@ -49,7 +49,17 @@ public class PhotoServiceImpl implements PhotoService {
 
     @Override
     public PageResult<PhotoVO> queryAllPhotos(Pageable pageable) {
-        Page<PhotoVO> photoPage = photoRepository.findAll(pageable).map(photo -> photoConverter.toVO(photo));
+        Page<PhotoVO> photoPage =
+                photoRepository.findAll(pageable)
+                        .map(photoConverter::toVO);
+        return PageResult.of(photoPage);
+    }
+
+    @Override
+    public PageResult<PhotoVO> queryPhotosByTravelId(Pageable pageable, Long travelId) {
+        Page<PhotoVO> photoPage =
+                photoRepository.findPhotoByTravelId(pageable, travelId)
+                        .map(photoConverter::toVO);
         return PageResult.of(photoPage);
     }
 }

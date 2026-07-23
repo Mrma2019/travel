@@ -15,6 +15,10 @@ public class FileUrlResolver {
         if (coverUrl == null) {
             return null;
         }
-        return fileProperties.getDomain() + coverUrl.replace("\\", "/");
+        String domain = fileProperties.getDomain();
+        if (!domain.endsWith("/")) {
+            domain += "/";
+        }
+        return domain + coverUrl.replace("\\", "/");
     }
 }

@@ -44,13 +44,10 @@ public class TimeLine {
     }
 
     @Embeddable
-    @Data
-    @Builder
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class Location {
-        private Double lat;
-        private Double lng;
-        private String name;
+    public record Location(
+            Double lat,
+            Double lng,
+            String name
+    ) {
     }
 }

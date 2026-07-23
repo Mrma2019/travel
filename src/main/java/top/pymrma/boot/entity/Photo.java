@@ -28,7 +28,8 @@ public class Photo {
     private String thumbnailUrl;
     private String location;
     private LocalDateTime takenAt;
-    private String travelId;
+
+    private Long travelId;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @OnDelete(action = OnDeleteAction.CASCADE)
